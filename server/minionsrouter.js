@@ -20,4 +20,18 @@ minionsRouter.get('/:minionId', (req, res, next) => {
   }
 });
 
+minionsRouter.put('/:minionId', (req, res, next) => {
+  const minion = db.getFromDatabaseById('minions', req.params.minionId);
+  if(isNaN(req.params.minionId)) {
+    res.status(404).send();
+  } else if (!req.params.minionId) {
+    res.status(404).send();
+  } else if (!minion) {
+    res.status(404).send();
+  } else {
+  db.updateInstanceInDatabase('minions', req.body);
+  res.send(req.body);
+  }
+});
+
 module.exports = minionsRouter;
