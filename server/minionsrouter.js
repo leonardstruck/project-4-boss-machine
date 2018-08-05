@@ -34,4 +34,10 @@ minionsRouter.put('/:minionId', (req, res, next) => {
   }
 });
 
+minionsRouter.post('/', (req, res, next) => {
+  if(req.body.name || req.body.title || req.body.salary) {
+  res.status(201).send(db.addToDatabase('minions', req.body));
+  }
+});
+
 module.exports = minionsRouter;
