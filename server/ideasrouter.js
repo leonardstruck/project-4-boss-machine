@@ -21,4 +21,18 @@ ideasRouter.get('/:ideaId', (req, res, next) => {
   }
 });
 
+ideasRouter.put('/:ideaId', (req, res, next) => {
+  const idea = db.getFromDatabaseById('ideas', req.params.ideaId);
+  if(isNaN(req.params.ideaId)) {
+    res.status(404).send();
+  } else if (!req.params.ideaId) {
+    res.status(404).send();
+  } else if (!idea) {
+    res.status(404).send();
+  } else {
+  db.updateInstanceInDatabase('ideas', req.body);
+  res.send(req.body);
+  }
+})
+
 module.exports = ideasRouter;
