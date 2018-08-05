@@ -41,4 +41,19 @@ ideasRouter.post('/', (req, res, next) => {
   }
 });
 
+ideasRouter.delete('/:ideaId', (req, res, next) => {
+  const idea = db.getFromDatabaseById('ideas', req.params.ideaId);
+  if(isNaN(req.params.ideaId)) {
+    res.status(404).send();
+  } else if (!req.params.ideaId) {
+    res.status(404).send();
+  } else if (!idea) {
+    res.status(404).send();
+  } else {
+    if(db.deleteFromDatabasebyId('ideas', req.params.ideaId)) {
+    res.status(204).send();
+    }
+  }
+});
+
 module.exports = ideasRouter;
