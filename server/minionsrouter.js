@@ -40,4 +40,19 @@ minionsRouter.post('/', (req, res, next) => {
   }
 });
 
+minionsRouter.delete('/:minionId', (req, res, next) => {
+  const minion = db.getFromDatabaseById('minions', req.params.minionId);
+  if(isNaN(req.params.minionId)) {
+    res.status(404).send();
+  } else if (!req.params.minionId) {
+    res.status(404).send();
+  } else if (!minion) {
+    res.status(404).send();
+  } else {
+    if(db.deleteFromDatabasebyId('minions', req.params.minionId)) {
+    res.status(204).send();
+    }
+  }
+});
+
 module.exports = minionsRouter;
