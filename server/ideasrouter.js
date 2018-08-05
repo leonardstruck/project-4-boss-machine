@@ -33,6 +33,12 @@ ideasRouter.put('/:ideaId', (req, res, next) => {
   db.updateInstanceInDatabase('ideas', req.body);
   res.send(req.body);
   }
-})
+});
+
+ideasRouter.post('/', (req, res, next) => {
+  if(req.body.name || req.body.description || req.body.numWeeks || req.body.weeklyRevenue) {
+  res.status(201).send(db.addToDatabase('ideas', req.body));
+  }
+});
 
 module.exports = ideasRouter;
